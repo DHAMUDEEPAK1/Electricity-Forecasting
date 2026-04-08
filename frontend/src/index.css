@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+
+    /* Dark theme only — VoltForecast dashboard */
+    --background: 0.09 0.015 230;
+    --foreground: 0.94 0.012 220;
+    --card: 0.12 0.018 230;
+    --card-foreground: 0.94 0.012 220;
+    --popover: 0.14 0.02 230;
+    --popover-foreground: 0.94 0.012 220;
+    --primary: 0.65 0.17 240;
+    --primary-foreground: 0.09 0.015 230;
+    --secondary: 0.16 0.02 230;
+    --secondary-foreground: 0.94 0.012 220;
+    --muted: 0.16 0.02 230;
+    --muted-foreground: 0.6 0.03 220;
+    --accent: 0.75 0.16 165;
+    --accent-foreground: 0.09 0.015 230;
+    --destructive: 0.62 0.22 25;
+    --destructive-foreground: 0.94 0.012 220;
+    --border: 0.22 0.025 230;
+    --input: 0.2 0.025 230;
+    --ring: 0.65 0.17 240;
+
+    --chart-1: 0.65 0.17 240;
+    --chart-2: 0.75 0.16 165;
+    --chart-3: 0.6 0.1 220;
+    --chart-4: 0.8 0.18 85;
+    --chart-5: 0.7 0.15 290;
+
+    --sidebar: 0.12 0.018 230;
+    --sidebar-foreground: 0.94 0.012 220;
+    --sidebar-primary: 0.65 0.17 240;
+    --sidebar-primary-foreground: 0.09 0.015 230;
+    --sidebar-accent: 0.16 0.02 230;
+    --sidebar-accent-foreground: 0.94 0.012 220;
+    --sidebar-border: 0.22 0.025 230;
+    --sidebar-ring: 0.65 0.17 240;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-family: "Inter", sans-serif;
+  }
+}
+
+@layer utilities {
+  .glow-blue {
+    box-shadow: 0 0 12px 2px oklch(0.65 0.17 240 / 0.45);
+  }
+  .glow-green {
+    box-shadow: 0 0 12px 2px oklch(0.75 0.16 165 / 0.4);
+  }
+  .card-surface {
+    background: oklch(0.12 0.018 230);
+    border: 1px solid oklch(0.22 0.025 230);
+    border-radius: var(--radius);
+  }
+  .text-electric {
+    color: oklch(0.65 0.17 240);
+  }
+  .text-teal {
+    color: oklch(0.75 0.16 165);
+  }
+  .bg-electric {
+    background-color: oklch(0.65 0.17 240);
+  }
+  .border-electric {
+    border-color: oklch(0.65 0.17 240);
+  }
+  .scrollbar-dark::-webkit-scrollbar {
+    width: 6px;
+  }
+  .scrollbar-dark::-webkit-scrollbar-track {
+    background: oklch(0.09 0.015 230);
+  }
+  .scrollbar-dark::-webkit-scrollbar-thumb {
+    background: oklch(0.25 0.025 230);
+    border-radius: 3px;
+  }
+}
