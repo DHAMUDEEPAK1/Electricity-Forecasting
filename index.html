@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Electricity Demand Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">GridVision</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-tab="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-item" data-tab="forecast">
+                    <span class="nav-icon">🔮</span>
+                    <span>Forecast</span>
+                </button>
+                <button class="nav-item" data-tab="analytics">
+                    <span class="nav-icon">📈</span>
+                    <span>Analytics</span>
+                </button>
+                <button class="nav-item" data-tab="energy-mix">
+                    <span class="nav-icon">🌍</span>
+                    <span>Energy Mix</span>
+                </button>
+                <button class="nav-item" data-tab="settings">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Settings</span>
+                </button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="city-selector">
+                    <label>Select City</label>
+                    <select id="citySelect">
+                        <option value="mumbai">Mumbai, India</option>
+                        <option value="delhi">Delhi, India</option>
+                        <option value="bangalore">Bangalore, India</option>
+                        <option value="chennai">Chennai, India</option>
+                        <option value="kolkata">Kolkata, India</option>
+                        <option value="hyderabad">Hyderabad, India</option>
+                        <option value="london">London, UK</option>
+                        <option value="newyork">New York, USA</option>
+                        <option value="tokyo">Tokyo, Japan</option>
+                        <option value="sydney">Sydney, Australia</option>
+                    </select>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title">Dashboard Overview</h1>
+                    <p class="last-updated">Last updated: <span id="lastUpdated">--</span></p>
+                </div>
+                <div class="header-right">
+                    <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                        <span>🌙</span>
+                    </button>
+                    <button class="refresh-btn" id="refreshBtn">
+                        <span>🔄</span> Refresh
+                    </button>
+                </div>
+            </header>
+
+            <!-- KPI Cards -->
+            <section class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">Current Demand</span>
+                        <span class="kpi-icon">⚡</span>
+                    </div>
+                    <div class="kpi-value" id="currentDemand">--</div>
+                    <div class="kpi-change positive" id="demandChange">--</div>
+                </div>
+                
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">Temperature</span>
+                        <span class="kpi-icon">🌡️</span>
+                    </div>
+                    <div class="kpi-value" id="currentTemp">--</div>
+                    <div class="kpi-change" id="tempChange">--</div>
+                </div>
+                
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">Renewable Share</span>
+                        <span class="kpi-icon">🌱</span>
+                    </div>
+                    <div class="kpi-value" id="renewableShare">--</div>
+                    <div class="kpi-change positive">+5.2%</div>
+                </div>
+                
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-label">Grid Status</span>
+                        <span class="kpi-icon">🔋</span>
+                    </div>
+                    <div class="kpi-value" id="gridStatus">--</div>
+                    <div class="kpi-change" id="gridLoad">--</div>
+                </div>
+            </section>
+
+            <!-- Charts Grid -->
+            <section class="charts-grid">
+                <!-- Main Forecast Chart -->
+                <div class="chart-card main-chart">
+                    <div class="chart-header">
+                        <h3>Electricity Demand Forecast</h3>
+                        <div class="chart-controls">
+                            <button class="chart-range active" data-range="24h">24H</button>
+                            <button class="chart-range" data-range="7d">7D</button>
+                            <button class="chart-range" data-range="30d">30D</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="demandChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Energy Mix Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Energy Mix</h3>
+                    </div>
+                    <div class="chart-container doughnut">
+                        <canvas id="energyMixChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Weather Impact Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Weather Impact</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="weatherChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Peak Demand Heatmap -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Weekly Pattern</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="heatmapChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommendations Panel -->
+            <section class="recommendations-panel">
+                <div class="panel-header">
+                    <h3>💡 Smart Recommendations</h3>
+                </div>
+                <div class="recommendations-list" id="recommendationsList">
+                    <!-- Dynamic content -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
